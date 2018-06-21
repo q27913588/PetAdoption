@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -31,7 +32,7 @@ namespace Adopt_MS
         {
 
 
-            
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -42,7 +43,9 @@ namespace Adopt_MS
 
             services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddScoped<IAnimalRepository, AnimalRepository>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -55,16 +58,27 @@ namespace Adopt_MS
                         Name = "JackHung",
                         Email = "Jack@coder.com.tw",
                     },
-                   
+
                 });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
 
                 var xmlPath = Path.Combine(basePath, "Adopt_MS.xml");
 
                 c.IncludeXmlComments(xmlPath);
-                c.IncludeXmlComments(xmlPath);
             });
-          
+            services.AddCors(options =>
+            {
+
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+
+                    policy.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,7 +101,7 @@ namespace Adopt_MS
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseCors("CorsPolicy");
             app.UseMvcWithDefaultRoute();
 
         }

@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+Adopt_MS/Properties/PublishProfiles/AdoptMS20180617053436 - Web Deploy\.pubxml

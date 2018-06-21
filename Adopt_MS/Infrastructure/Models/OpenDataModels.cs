@@ -118,10 +118,7 @@ namespace Adopt_MS.Infrastructure.Models
         /// </summary>
         public string shelter_name { get; set; }
 
-        /// <summary>
-        /// 圖片名稱(原始名稱)
-        /// </summary>
-        public object album_name { get; set; }
+
 
         /// <summary>
         /// 圖片名稱
@@ -129,10 +126,6 @@ namespace Adopt_MS.Infrastructure.Models
         public string album_file { get; set; }
 
 
-        /// <summary>
-        /// 圖片base64編碼
-        /// </summary>
-        public object album_base64 { get; set; }
 
 
         /// <summary>
@@ -144,7 +137,7 @@ namespace Adopt_MS.Infrastructure.Models
         /// <summary>
         /// cDate
         /// </summary>
-        public DateTime cDate { get; set; }
+        public DateTime? cDate { get; set; }
 
         /// <summary>
         /// 地址
